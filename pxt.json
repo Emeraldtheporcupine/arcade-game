@@ -6,7 +6,8 @@
         "device": "*",
         "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2",
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
-        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.2"
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.2",
+        "arcade-background-scroll": "github:microsoft/arcade-background-scroll#v0.1.2"
     },
     "files": [
         "main.blocks",
@@ -22,7 +23,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "2.0.63",
+        "target": "4.0.14",
         "targetId": "arcade"
     },
     "supportedTargets": [
