@@ -171,6 +171,7 @@ assets.animation`CloakerIdle`,
 150,
 true
 )
+Cloaker.ax = 50
 statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
 statusbar.value = 100
 statusbar.attachToSprite(Cloaker)
@@ -184,12 +185,14 @@ Center.x += -8
 music.play(music.createSong(assets.song`Boss`), music.PlaybackMode.LoopingInBackground)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsNormal`)
 scroller.setCameraScrollingMultipliers(0.25, 0, scroller.BackgroundLayer.Layer0)
-scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`layer1clouds`)
-scroller.setCameraScrollingMultipliers(0.45, 0, scroller.BackgroundLayer.Layer1)
-scroller.setBackgroundScrollOffset(0, -24, scroller.BackgroundLayer.Layer1)
-scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer1)
-scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2ground`)
-scroller.setCameraScrollingMultipliers(0.5, 0, scroller.BackgroundLayer.Layer2)
+scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`layer1MOON`)
+scroller.setCameraScrollingMultipliers(0.075, 0, scroller.BackgroundLayer.Layer1)
+scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2clouds`)
+scroller.setCameraScrollingMultipliers(0.45, 0, scroller.BackgroundLayer.Layer2)
+scroller.setBackgroundScrollOffset(0, -24, scroller.BackgroundLayer.Layer2)
+scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer2)
+scroller.setLayerImage(scroller.BackgroundLayer.Layer3, assets.image`layer3ground`)
+scroller.setCameraScrollingMultipliers(0.5, 0, scroller.BackgroundLayer.Layer3)
 game.onUpdate(function () {
     if (controller.right.isPressed()) {
         KickDirection = 1
@@ -211,12 +214,14 @@ game.onUpdate(function () {
         Derpo.vx = -76
     }
     Derpo.vy += 10
-    // Convert percentage to pixels
-    // Percentage of Cloaker from center
-    // Ratio of Cloaker to Derpo
-    // Derpo's percentage from center
-    // Derpo's distance from center (Center=128)
-    Cloaker.x = (Derpo.x - 128) / 128 / 4 * 128 + 128
+    if (false) {
+        // Convert percentage to pixels
+        // Percentage of Cloaker from center
+        // Ratio of Cloaker to Derpo
+        // Derpo's percentage from center
+        // Derpo's distance from center (Center=128)
+        Cloaker.x = (Derpo.x - 128) / 128 / 4 * 128 + 128
+    }
 })
 game.onUpdate(function () {
     if (Cloaker.y > 170) {
@@ -229,6 +234,12 @@ game.onUpdate(function () {
     if (enemyDead == false) {
         if (runningTime - currentAttackTime > CheckTime) {
             if (currentAttack == 0) {
+                animation.runImageAnimation(
+                Cloaker,
+                assets.animation`CloakerSummonBegin`,
+                150,
+                true
+                )
                 Warning = sprites.create(assets.image`Uh Oh_`, SpriteKind.Overhead)
                 Warning.x = Derpo.x + KickDirection * 32
                 Warning.y = Derpo.y - 32
@@ -236,7 +247,8 @@ game.onUpdate(function () {
                 currentAttack = 1
             } else if (currentAttack == 1) {
                 sprites.destroy(Warning)
-                scene.setBackgroundColor(9)
+                scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsFlash`)
+                scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2flash`)
                 Lightning = sprites.create(assets.image`yay`, SpriteKind.Hazard)
                 Lightning.x = Warning.x
                 Lightning.y = Warning.y - 68
@@ -248,11 +260,32 @@ game.onUpdate(function () {
                 )
                 CheckTime = 150
                 currentAttack = 2
+                animation.runImageAnimation(
+                Cloaker,
+                assets.animation`CloakerSwipe`,
+                75,
+                true
+                )
+                timer.after(300, function () {
+                    animation.runImageAnimation(
+                    Cloaker,
+                    assets.animation`CloakerIdle`,
+                    150,
+                    true
+                    )
+                })
                 timer.after(150, function () {
-                    scene.setBackgroundColor(15)
+                    scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsNormal`)
+                    scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2clouds`)
                     sprites.destroy(Lightning)
                 })
             } else if (currentAttack == 2) {
+                animation.runImageAnimation(
+                Cloaker,
+                assets.animation`CloakerSummonBegin`,
+                150,
+                true
+                )
                 Warning = sprites.create(assets.image`Uh Oh_`, SpriteKind.Overhead)
                 Warning.x = Derpo.x
                 Warning.y = Derpo.y - 32
@@ -260,7 +293,8 @@ game.onUpdate(function () {
                 currentAttack = 3
             } else if (currentAttack == 3) {
                 sprites.destroy(Warning)
-                scene.setBackgroundColor(9)
+                scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsFlash`)
+                scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2flash`)
                 Lightning = sprites.create(assets.image`yay`, SpriteKind.Hazard)
                 Lightning.x = Warning.x
                 Lightning.y = Warning.y - 68
@@ -272,8 +306,23 @@ game.onUpdate(function () {
                 )
                 CheckTime = 150
                 currentAttack = 4
+                animation.runImageAnimation(
+                Cloaker,
+                assets.animation`CloakerSwipe`,
+                75,
+                true
+                )
+                timer.after(300, function () {
+                    animation.runImageAnimation(
+                    Cloaker,
+                    assets.animation`CloakerIdle`,
+                    150,
+                    true
+                    )
+                })
                 timer.after(150, function () {
-                    scene.setBackgroundColor(15)
+                    scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsNormal`)
+                    scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2clouds`)
                     sprites.destroy(Lightning)
                 })
             } else if (currentAttack == 4) {
