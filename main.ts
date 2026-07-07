@@ -182,17 +182,23 @@ Cloaker.vy = 50
 let Center = sprites.create(assets.image`yay`, SpriteKind.Middle)
 tiles.placeOnTile(Center, tiles.getTileLocation(8, 10))
 Center.x += -8
-music.play(music.createSong(assets.song`Boss`), music.PlaybackMode.LoopingInBackground)
+music.play(music.createSong(assets.song`CLOAKER`), music.PlaybackMode.LoopingInBackground)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`layer0StarsNormal`)
 scroller.setCameraScrollingMultipliers(0.25, 0, scroller.BackgroundLayer.Layer0)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`layer1MOON`)
 scroller.setCameraScrollingMultipliers(0.075, 0, scroller.BackgroundLayer.Layer1)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`layer2clouds`)
-scroller.setCameraScrollingMultipliers(0.45, 0, scroller.BackgroundLayer.Layer2)
+scroller.setCameraScrollingMultipliers(0.35, 0, scroller.BackgroundLayer.Layer2)
 scroller.setBackgroundScrollOffset(0, -24, scroller.BackgroundLayer.Layer2)
 scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer2)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer3, assets.image`layer3ground`)
-scroller.setCameraScrollingMultipliers(0.5, 0, scroller.BackgroundLayer.Layer3)
+scroller.setCameraScrollingMultipliers(0.45, 0, scroller.BackgroundLayer.Layer3)
+// Convert percentage to pixels
+// Percentage of Cloaker from center
+// Ratio of Cloaker to Derpo
+// Derpo's percentage from center
+// Derpo's distance from center (Center=128)
+Cloaker.x = (Derpo.x - 128) / 128 / 4 * 128 + 128
 game.onUpdate(function () {
     if (controller.right.isPressed()) {
         KickDirection = 1
@@ -214,13 +220,14 @@ game.onUpdate(function () {
         Derpo.vx = -76
     }
     Derpo.vy += 10
-    if (false) {
-        // Convert percentage to pixels
-        // Percentage of Cloaker from center
-        // Ratio of Cloaker to Derpo
-        // Derpo's percentage from center
-        // Derpo's distance from center (Center=128)
-        Cloaker.x = (Derpo.x - 128) / 128 / 4 * 128 + 128
+    if (Cloaker.x > 150 && Cloaker.vx < 0) {
+        Cloaker.ax = -75
+    } else if (Cloaker.x < 100 && Cloaker.vx > 0) {
+        Cloaker.ax = 75
+    } else if (Cloaker.x < 150 && Cloaker.vx < 0) {
+        Cloaker.ax = -50
+    } else if (Cloaker.x > 100 && Cloaker.vx > 0) {
+        Cloaker.ax = 50
     }
 })
 game.onUpdate(function () {
