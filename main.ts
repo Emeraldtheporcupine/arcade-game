@@ -171,7 +171,7 @@ assets.animation`CloakerIdle`,
 150,
 true
 )
-Cloaker.setFlag(SpriteFlag.ShowPhysics, true)
+Cloaker.setFlag(SpriteFlag.ShowPhysics, false)
 Cloaker.ax = 15
 statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
 statusbar.value = 100
@@ -222,15 +222,9 @@ game.onUpdate(function () {
     }
     Derpo.vy += 10
     if (Cloaker.x < 100 && Cloaker.vx < 0) {
-        Cloaker.ax = 50
+        Cloaker.ax = 20
     } else if (Cloaker.x > 200 && Cloaker.vx > 0) {
-        Cloaker.ax = -50
-    } else if (Cloaker.x >= 100 && Cloaker.vx < 0) {
-        Cloaker.ax = 25
-    } else if (Cloaker.x <= 200 && Cloaker.vx > 0) {
-    	
-    } else {
-    	
+        Cloaker.ax = -20
     }
 })
 game.onUpdate(function () {
