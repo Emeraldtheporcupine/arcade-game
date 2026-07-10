@@ -75,14 +75,32 @@ statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
     sprites.destroyAllSpritesOfKind(SpriteKind.Overhead)
     sprites.destroyAllSpritesOfKind(SpriteKind.Hazard)
     currentAttack = -1
-    animation.stopAnimation(animation.AnimationTypes.All, Cloaker)
     music.stopAllSounds()
-    animation.runImageAnimation(
-    Cloaker,
-    assets.animation`CloakerDying`,
-    150,
-    true
-    )
+    animation.stopAnimation(animation.AnimationTypes.All, Cloaker)
+    Cloaker.ax = 0
+    Cloaker.vx = 0
+    timer.after(1000, function () {
+        animation.runImageAnimation(
+        Cloaker,
+        assets.animation`CloakerDying`,
+        150,
+        true
+        )
+        color.FadeToWhite.startScreenEffect(4000)
+    })
+    scene.cameraShake(2, 2000)
+    timer.after(1500, function () {
+        scene.cameraShake(3, 2000)
+        timer.after(1500, function () {
+            scene.cameraShake(4, 2000)
+            timer.after(1500, function () {
+                scene.cameraShake(5, 1000)
+                timer.after(1000, function () {
+                    game.reset()
+                })
+            })
+        })
+    })
 })
 sprites.onOverlap(SpriteKind.BOSS, SpriteKind.KillerRock, function (sprite, otherSprite) {
     statusbar.value += -8
@@ -174,7 +192,7 @@ true
 Cloaker.setFlag(SpriteFlag.ShowPhysics, false)
 Cloaker.ax = 15
 statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
-statusbar.value = 100
+statusbar.value = 8
 statusbar.attachToSprite(Cloaker)
 statusbar.setColor(7, 13)
 statusbar.setOffsetPadding(-25, -15)
