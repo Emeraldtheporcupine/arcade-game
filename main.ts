@@ -25,11 +25,11 @@ sprites.onOverlap(SpriteKind.Hazard, SpriteKind.Player, function (sprite, otherS
         )
     }
     list[0].vx = 100
-    list[1].vx = 65
-    list[1].vy = -65
+    list[1].vx = 75
+    list[1].vy = -75
     list[2].vy = -100
-    list[3].vx = -65
-    list[3].vy = -65
+    list[3].vx = -75
+    list[3].vy = -75
     list[4].vx = -100
     sprites.destroy(otherSprite)
     music.play(music.createSoundEffect(WaveShape.Noise, 5000, 0, 255, 242, 200, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
