@@ -192,7 +192,7 @@ true
 Cloaker.setFlag(SpriteFlag.ShowPhysics, false)
 Cloaker.ax = 15
 statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
-statusbar.value = 8
+statusbar.value = 100
 statusbar.attachToSprite(Cloaker)
 statusbar.setColor(7, 13)
 statusbar.setOffsetPadding(-25, -15)
